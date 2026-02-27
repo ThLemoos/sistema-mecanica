@@ -73,3 +73,10 @@ button:hover {
     padding: 15px;
     border-radius: 10px;
 }
+
+.btn-remove {
+  background: #ff4d4d;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+}

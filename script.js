@@ -40,7 +40,8 @@ window.adicionarServico = function () {
     div.innerHTML = `
     <input type="text" placeholder="Descrição">
     <input type="number" placeholder="Valor" oninput="calcularTotal()">
-    <button onclick="this.parentElement.remove(); calcularTotal();" style="background:red;">X</button>
+    <button onclick="this.parentElement.remove(); calcularTotal();" 
+        class="btn-remove">X</button>
   `;
 
     document.getElementById("servicos").appendChild(div);
