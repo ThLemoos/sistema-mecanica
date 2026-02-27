@@ -31,14 +31,19 @@ body {
 }
 
 input {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #servicos div {
-    display: flex;
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
     gap: 10px;
+    align-items: center;
     margin-bottom: 10px;
 }
 
