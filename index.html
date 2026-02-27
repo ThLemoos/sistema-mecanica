@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema OS Mecânica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>Mecânica do João</h1>
+            <div>
+                <p><strong>OS Nº:</strong> <span id="numeroOS"></span></p>
+                <p><strong>Data:</strong> <span id="dataAtual"></span></p>
+            </div>
+        </div>
+
+        <div id="ordemServico" class="ordem">
+
+            <h2>Dados do Cliente</h2>
+
+            <div class="grid">
+                <input type="text" id="nome" placeholder="Nome do Cliente">
+                <input type="text" id="telefone" placeholder="Telefone">
+                <input type="text" id="endereco" placeholder="Endereço">
+                <input type="text" id="placa" placeholder="Placa da Moto">
+                <input type="number" id="km" placeholder="KM da Moto">
+            </div>
+
+            <h2>Serviços</h2>
+            <div id="servicos"></div>
+
+            <button id="btnAdd" onclick="adicionarServico()">+ Adicionar Serviço</button>
+
+            <div class="total">
+                <h3>Total: R$ <span id="valorTotal">0.00</span></h3>
+            </div>
+
+        </div>
+
+        <div class="acoes">
+            <button onclick="salvarOS()">Salvar Online</button>
+            <button onclick="listarOS()">Ver Histórico</button>
+            <button onclick="gerarImagem()">Gerar Imagem</button>
+        </div>
+
+        <div id="historico"></div>
+
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <!-- Firebase -->
+    <script type="module" src="script.js"></script>
+
+</body>
+
+</html>
