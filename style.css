@@ -80,3 +80,13 @@ button:hover {
   border-radius: 6px;
   font-weight: bold;
 }
+
+.titulo-imagem {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.titulo-imagem h1 {
+  font-size: 22px;
+  margin: 0;
+}

@@ -102,6 +102,10 @@ window.listarOS = async function () {
 };
 
 window.gerarImagem = function () {
+
+    const botoesRemover = document.querySelectorAll(".btn-remove");
+    botoesRemover.forEach(btn => btn.style.display = "none");
+
     const btnAdd = document.getElementById("btnAdd");
     btnAdd.style.display = "none";
 
@@ -110,6 +114,8 @@ window.gerarImagem = function () {
         link.download = "ordem-servico.png";
         link.href = canvas.toDataURL();
         link.click();
-        btnAdd.style.display = "block";
+
+        botoesRemover.forEach(btn => btn.style.display = "inline-block");
+        btnAdd.style.display = "inline-block";
     });
 };
