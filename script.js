@@ -119,3 +119,8 @@ window.gerarImagem = function () {
         btnAdd.style.display = "inline-block";
     });
 };
+
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("Service Worker registrado"));
+}
