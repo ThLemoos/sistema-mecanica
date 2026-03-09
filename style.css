@@ -91,39 +91,6 @@ button:hover {
     margin: 0;
 }
 
-.tela-inicial {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: linear-gradient(135deg, #111, #333);
-    color: white;
-}
-
-.logo-oficina {
-    width: 220px;
-    margin-bottom: 20px;
-    border-radius: 50%;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
-
-.btn-iniciar {
-    padding: 15px 30px;
-    font-size: 18px;
-    background: #ff9800;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    color: white;
-    margin-top: 20px;
-}
-
-.btn-iniciar:hover {
-    background: #e68900;
-}
-
 .cabecalho {
     display: flex;
     align-items: center;

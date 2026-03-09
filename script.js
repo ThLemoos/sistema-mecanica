@@ -119,11 +119,3 @@ window.gerarImagem = function () {
         btnAdd.style.display = "inline-block";
     });
 };
-
-window.abrirSistema = function () {
-
-    document.getElementById("telaInicial").style.display = "none";
-
-    document.getElementById("sistema").style.display = "block";
-
-}
