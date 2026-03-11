@@ -35,20 +35,23 @@ function mostrarData() {
 }
 
 window.adicionarServico = function () {
+
     const div = document.createElement("div");
 
     div.innerHTML = `
-    <input type="text" placeholder="Descrição">
-    <input type="number" placeholder="Valor" oninput="calcularTotal()">
-    <button onclick="this.parentElement.remove(); calcularTotal();" 
-        class="btn-remove">X</button>
-  `;
+<input type="text" placeholder="Descrição">
+<input type="number" placeholder="Valor" oninput="calcularTotal()">
+<button onclick="this.parentElement.remove(); calcularTotal();" class="btn-remove">X</button>
+`;
 
     document.getElementById("servicos").appendChild(div);
+
 };
 
 window.calcularTotal = function () {
+
     const valores = document.querySelectorAll('#servicos input[type="number"]');
+
     let total = 0;
 
     valores.forEach(input => {
@@ -56,49 +59,66 @@ window.calcularTotal = function () {
     });
 
     document.getElementById("valorTotal").innerText = total.toFixed(2);
+
 };
 
 window.salvarOS = async function () {
+
     const servicos = [];
+
     document.querySelectorAll("#servicos div").forEach(div => {
+
         const inputs = div.querySelectorAll("input");
+
         servicos.push({
             descricao: inputs[0].value,
             valor: inputs[1].value
         });
+
     });
 
     await addDoc(collection(db, "ordens"), {
+
         numeroOS: document.getElementById("numeroOS").innerText,
         data: document.getElementById("dataAtual").innerText,
+
         nome: nome.value,
         telefone: telefone.value,
         endereco: endereco.value,
         placa: placa.value,
         km: km.value,
+
         servicos,
         total: valorTotal.innerText
+
     });
 
     alert("OS salva online com sucesso!");
+
 };
 
 window.listarOS = async function () {
+
     const querySnapshot = await getDocs(collection(db, "ordens"));
+
     let html = "<h3>Histórico</h3>";
 
     querySnapshot.forEach(doc => {
+
         const os = doc.data();
+
         html += `
-      <div style="border-bottom:1px solid #ccc; margin-bottom:10px;">
-        <p><strong>OS:</strong> ${os.numeroOS}</p>
-        <p><strong>Cliente:</strong> ${os.nome}</p>
-        <p><strong>Total:</strong> R$ ${os.total}</p>
-      </div>
-    `;
+<div style="border-bottom:1px solid #ccc; margin-bottom:10px;">
+<p><strong>OS:</strong> ${os.numeroOS}</p>
+<p><strong>Cliente:</strong> ${os.nome}</p>
+<p><strong>Total:</strong> R$ ${os.total}</p>
+</div>
+`;
+
     });
 
     document.getElementById("historico").innerHTML = html;
+
 };
 
 window.gerarImagem = function () {
@@ -109,18 +129,34 @@ window.gerarImagem = function () {
     const btnAdd = document.getElementById("btnAdd");
     btnAdd.style.display = "none";
 
-    html2canvas(document.getElementById("ordemServico")).then(canvas => {
+    const acoes = document.querySelector(".acoes");
+    acoes.style.display = "none";
+
+    html2canvas(document.querySelector(".container"), {
+        scale: 2
+    }).then(canvas => {
+
         const link = document.createElement("a");
+
         link.download = "ordem-servico.png";
+
         link.href = canvas.toDataURL();
+
         link.click();
 
         botoesRemover.forEach(btn => btn.style.display = "inline-block");
+
         btnAdd.style.display = "inline-block";
+
+        acoes.style.display = "block";
+
     });
+
 };
 
 if ("serviceWorker" in navigator) {
+
     navigator.serviceWorker.register("service-worker.js")
         .then(() => console.log("Service Worker registrado"));
+
 }

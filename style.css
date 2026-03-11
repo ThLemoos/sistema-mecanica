@@ -117,3 +117,24 @@ button:hover {
     margin: 0;
     color: #666;
 }
+
+.cabecalho{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#f3f3f3;
+padding:15px;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+.logo-area{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.os-info{
+text-align:right;
+font-weight:bold;
+}

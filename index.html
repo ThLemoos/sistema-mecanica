@@ -4,15 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Sistema OS Mecânica</title>
+
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="img/logo-192.png">
+
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#111111">
+
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Sistema Mecânica">
     <link rel="apple-touch-icon" href="img/logo-192.png">
+
 </head>
 
 <body>
@@ -21,28 +26,23 @@
 
         <div class="cabecalho">
 
-            <img src="img/logo-saul-cortada.JPG" class="logo-oficina">
+            <div class="logo-area">
+                <img src="img/logo-saul-cortada.JPG" class="logo-oficina">
 
-            <div>
-                <h1>Oficina Sempre 80km/h</h1>
-                <p>Sistema de Ordem de Serviço</p>
+                <div>
+                    <h1>Oficina Sempre 80km/h</h1>
+                    <p>Sistema de Ordem de Serviço</p>
+                </div>
             </div>
 
-        </div>
-
-        <div class="header">
-            <h1>Oficina Sempre 80km/h</h1>
-            <div>
+            <div class="os-info">
                 <p><strong>OS Nº:</strong> <span id="numeroOS"></span></p>
                 <p><strong>Data:</strong> <span id="dataAtual"></span></p>
             </div>
+
         </div>
 
         <div id="ordemServico" class="ordem">
-
-            <div class="titulo-imagem">
-                <h1>Oficina Sempre 80km/h</h1>
-            </div>
 
             <h2>Dados do Cliente</h2>
 
@@ -55,6 +55,7 @@
             </div>
 
             <h2>Serviços</h2>
+
             <div id="servicos"></div>
 
             <button id="btnAdd" onclick="adicionarServico()">+ Adicionar Serviço</button>
