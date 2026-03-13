@@ -219,3 +219,19 @@ if ("serviceWorker" in navigator) {
         .then(() => console.log("Service Worker registrado"));
 
 }
+
+window.filtrarOS = function () {
+
+    const busca = document.getElementById("buscarOS").value.toLowerCase();
+
+    const cards = document.querySelectorAll(".card-os");
+
+    cards.forEach(card => {
+
+        const texto = card.innerText.toLowerCase();
+
+        card.style.display = texto.includes(busca) ? "block" : "none";
+
+    });
+
+}

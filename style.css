@@ -278,3 +278,19 @@ button:hover {
     width: auto;
 
 }
+
+#buscarOS {
+
+    width: 100%;
+
+    padding: 10px;
+
+    border-radius: 8px;
+
+    border: 1px solid #ccc;
+
+    margin-bottom: 15px;
+
+    font-size: 14px;
+
+}
