@@ -3,7 +3,9 @@ import {
     getFirestore,
     collection,
     addDoc,
-    getDocs
+    getDocs,
+    deleteDoc,
+    doc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -103,9 +105,10 @@ window.listarOS = async function () {
 
     let html = "<h3>Histórico de Ordens de Serviço</h3>";
 
-    querySnapshot.forEach(doc => {
+    querySnapshot.forEach(documento => {
 
-        const os = doc.data();
+        const os = documento.data();
+        const id = documento.id;
 
         let servicosHTML = "";
 
@@ -116,32 +119,51 @@ window.listarOS = async function () {
         });
 
         html += `
-        <div style="border:1px solid #ccc; padding:15px; margin-bottom:15px; border-radius:10px;">
-        
-            <p><strong>OS Nº:</strong> ${os.numeroOS}</p>
-            <p><strong>Data:</strong> ${os.data}</p>
+<div style="border:1px solid #ccc; padding:15px; margin-bottom:15px; border-radius:10px;">
 
-            <p><strong>Cliente:</strong> ${os.nome}</p>
-            <p><strong>Telefone:</strong> ${os.telefone}</p>
-            <p><strong>Endereço:</strong> ${os.endereco}</p>
+<p><strong>OS Nº:</strong> ${os.numeroOS}</p>
+<p><strong>Data:</strong> ${os.data}</p>
 
-            <p><strong>Placa da Moto:</strong> ${os.placa}</p>
-            <p><strong>KM:</strong> ${os.km}</p>
+<p><strong>Cliente:</strong> ${os.nome}</p>
+<p><strong>Telefone:</strong> ${os.telefone}</p>
 
-            <p><strong>Serviços:</strong></p>
-            <ul>
-                ${servicosHTML}
-            </ul>
+<p><strong>Placa:</strong> ${os.placa}</p>
+<p><strong>KM:</strong> ${os.km}</p>
 
-            <p><strong>Total:</strong> R$ ${os.total}</p>
+<p><strong>Total:</strong> R$ ${os.total}</p>
 
-        </div>
-        `;
+<button onclick="excluirOS('${id}')" style="
+background:#ff4444;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:6px;
+cursor:pointer;
+">
+Excluir OS
+</button>
+
+</div>
+`;
     });
 
     document.getElementById("historico").innerHTML = html;
 
 };
+
+window.excluirOS = async function (id) {
+
+    const confirmar = confirm("Deseja realmente excluir esta OS?");
+
+    if (!confirmar) return;
+
+    await deleteDoc(doc(db, "ordens", id));
+
+    alert("OS excluída com sucesso!");
+
+    listarOS();
+
+}
 
 window.gerarImagem = function () {
 
