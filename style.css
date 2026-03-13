@@ -12,21 +12,17 @@ body {
 }
 
 .acoes {
-    position: sticky;
-    bottom: 10px;
-    max-width: 900px;
-    margin: auto;
-    background: transparent;
-    padding: 10px 0;
+    margin-top: 25px;
     display: flex;
-    gap: 10px;
     justify-content: center;
+    gap: 10px;
     flex-wrap: wrap;
 }
 
 .acoes button {
     flex: 1;
-    min-width: 140px;
+    min-width: 150px;
+    max-width: 200px;
 }
 
 @media (max-width:600px) {
@@ -47,7 +43,7 @@ body {
     max-width: 900px;
     margin: auto;
     min-height: 100vh;
-    padding-bottom: 90px;
+    padding-bottom: 110px;
 }
 
 .header {
