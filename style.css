@@ -174,3 +174,14 @@ button:hover {
     }
 
 }
+
+.btn-excluir {
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    width: 100%;
+    font-weight: bold;
+}
