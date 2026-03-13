@@ -1,12 +1,20 @@
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
 body {
     font-family: Arial;
     background: #f0f0f0;
     padding: 20px;
+    overscroll-behavior: none;
 }
 
 .container {
     max-width: 900px;
     margin: auto;
+    min-height: 100vh;
 }
 
 .header {
@@ -325,16 +333,5 @@ button:hover {
 .lista-servicos li {
 
     margin-bottom: 4px;
-
-}
-
-.btn-pdf {
-
-    background: #1976d2;
-    color: white;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
 
 }
