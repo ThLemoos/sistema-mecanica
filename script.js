@@ -95,15 +95,35 @@ window.salvarOS = async function () {
 
     });
 
-    alert("OS salva online com sucesso!");
+    alert("OS salva com sucesso!");
 
-};
+    listarOS();
+
+    limparFormulario();
+
+}
 
 window.listarOS = async function () {
 
     const querySnapshot = await getDocs(collection(db, "ordens"));
 
-    let html = "<h3>Histórico de Ordens de Serviço</h3>";
+    let html = `
+<div style="display:flex; justify-content:space-between; align-items:center;">
+<h3>Histórico de Ordens de Serviço</h3>
+
+<button onclick="fecharHistorico()" style="
+background:#333;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:6px;
+cursor:pointer;
+">
+Fechar
+</button>
+
+</div>
+`;
 
     querySnapshot.forEach(documento => {
 
@@ -202,5 +222,29 @@ if ("serviceWorker" in navigator) {
 
     navigator.serviceWorker.register("service-worker.js")
         .then(() => console.log("Service Worker registrado"));
+
+}
+
+function limparFormulario() {
+
+    nome.value = "";
+    telefone.value = "";
+    endereco.value = "";
+    placa.value = "";
+    km.value = "";
+
+    document.getElementById("servicos").innerHTML = "";
+
+    document.getElementById("valorTotal").innerText = "0.00";
+
+    gerarNumeroOS();
+
+    adicionarServico();
+
+}
+
+window.fecharHistorico = function () {
+
+    document.getElementById("historico").innerHTML = "";
 
 }
