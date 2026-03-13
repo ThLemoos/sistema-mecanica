@@ -11,25 +11,43 @@ body {
     padding: 20px;
 }
 
-/* BOTÕES */
 .acoes {
     position: sticky;
-    bottom: 0;
-    background: #111;
-    padding: 10px;
+    bottom: 10px;
+    max-width: 900px;
+    margin: auto;
+    background: transparent;
+    padding: 10px 0;
     display: flex;
     gap: 10px;
+    justify-content: center;
     flex-wrap: wrap;
-    z-index: 10;
 }
 
-/* CONTAINER PRINCIPAL */
+.acoes button {
+    flex: 1;
+    min-width: 140px;
+}
+
+@media (max-width:600px) {
+
+    .acoes {
+        gap: 8px;
+    }
+
+    .acoes button {
+        flex: 1 1 45%;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+}
+
 .container {
     max-width: 900px;
     margin: auto;
     min-height: 100vh;
     padding-bottom: 90px;
-    /* espaço para os botões não cobrirem conteúdo */
 }
 
 .header {
@@ -47,7 +65,6 @@ body {
     border-radius: 0 0 10px 10px;
 }
 
-/* GRID */
 .grid {
     display: grid;
     gap: 10px;
@@ -63,7 +80,6 @@ input {
     box-sizing: border-box;
 }
 
-/* SERVIÇOS */
 #servicos div {
     display: grid;
     grid-template-columns: 2fr 1fr auto;
@@ -72,7 +88,6 @@ input {
     margin-bottom: 10px;
 }
 
-/* BOTÕES */
 button {
     padding: 10px 15px;
     border: none;
@@ -100,7 +115,6 @@ button:hover {
     border-radius: 10px;
 }
 
-/* BOTÃO REMOVER */
 .btn-remove {
     background: #ff4d4d;
     padding: 8px 12px;
@@ -108,7 +122,6 @@ button:hover {
     font-weight: bold;
 }
 
-/* CABEÇALHO */
 .cabecalho {
     display: flex;
     justify-content: space-between;
@@ -151,7 +164,6 @@ button:hover {
     font-weight: 600;
 }
 
-/* MOBILE */
 @media (max-width:600px) {
 
     .cabecalho {
@@ -175,7 +187,6 @@ button:hover {
 
 }
 
-/* HISTÓRICO */
 .painel-historico {
 
     position: fixed;
