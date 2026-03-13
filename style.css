@@ -294,3 +294,47 @@ button:hover {
     font-size: 14px;
 
 }
+
+.btn-whatsapp {
+
+    background: #25D366;
+
+    color: white;
+
+    padding: 8px 14px;
+
+    border-radius: 6px;
+
+    text-decoration: none;
+
+    margin-left: 10px;
+
+    font-size: 13px;
+
+}
+
+.lista-servicos {
+
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding-left: 18px;
+    font-size: 14px;
+
+}
+
+.lista-servicos li {
+
+    margin-bottom: 4px;
+
+}
+
+.btn-pdf {
+
+    background: #1976d2;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+
+}

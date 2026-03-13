@@ -5,9 +5,10 @@ import {
     addDoc,
     getDocs,
     deleteDoc,
-    doc
+    doc,
+    query,
+    orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
 const firebaseConfig = {
     apiKey: "AIzaSyC17R6vlTFRdU4lRTGL0knCefnYsnihjbE",
     authDomain: "sistema-mecanica-343b7.firebaseapp.com",
@@ -105,7 +106,9 @@ window.salvarOS = async function () {
 
 window.listarOS = async function () {
 
-    const querySnapshot = await getDocs(collection(db, "ordens"));
+    const q = query(collection(db, "ordens"), orderBy("numeroOS", "desc"));
+
+    const querySnapshot = await getDocs(q);
 
     let html = "";
 
@@ -113,6 +116,23 @@ window.listarOS = async function () {
 
         const os = documento.data();
         const id = documento.id;
+
+        // montar lista de serviços
+        let listaServicos = "";
+
+        if (os.servicos && os.servicos.length > 0) {
+
+            os.servicos.forEach(servico => {
+
+                listaServicos += `
+                <li>
+                ${servico.descricao} - R$ ${Number(servico.valor).toFixed(2)}
+                </li>
+                `;
+
+            });
+
+        }
 
         html += `
 <div class="card-os">
@@ -126,14 +146,25 @@ window.listarOS = async function () {
 <p><strong>Placa:</strong> ${os.placa}</p>
 <p><strong>KM:</strong> ${os.km}</p>
 
+<p><strong>Serviços realizados:</strong></p>
+
+<ul class="lista-servicos">
+${listaServicos}
+</ul>
+
 <p><strong>Total:</strong> R$ ${os.total}</p>
 
 <button onclick="excluirOS('${id}')" class="btn-excluir">
 Excluir OS
 </button>
 
+<a href="https://wa.me/55${os.telefone}?text=Sua ordem de serviço foi registrada no sistema." target="_blank" class="btn-whatsapp">
+Enviar WhatsApp
+</a>
+
 </div>
 `;
+
     });
 
     document.getElementById("historicoConteudo").innerHTML = html;
@@ -235,3 +266,41 @@ window.filtrarOS = function () {
     });
 
 }
+
+window.gerarPDF = function () {
+
+    const botoesRemover = document.querySelectorAll(".btn-remove");
+    botoesRemover.forEach(btn => btn.style.display = "none");
+
+    const btnAdd = document.getElementById("btnAdd");
+    btnAdd.style.display = "none";
+
+    const acoes = document.querySelector(".acoes");
+    acoes.style.display = "none";
+
+    html2canvas(document.querySelector(".container"), {
+        scale: 2
+    }).then(canvas => {
+
+        const imgData = canvas.toDataURL("image/png");
+
+        const { jsPDF } = window.jspdf;
+
+        const pdf = new jsPDF("p", "mm", "a4");
+
+        const larguraPDF = 210;
+        const alturaPDF = (canvas.height * larguraPDF) / canvas.width;
+
+        pdf.addImage(imgData, "PNG", 0, 10, larguraPDF, alturaPDF);
+
+        pdf.save("ordem-servico.pdf");
+
+        botoesRemover.forEach(btn => btn.style.display = "inline-block");
+
+        btnAdd.style.display = "inline-block";
+
+        acoes.style.display = "block";
+
+    });
+
+};

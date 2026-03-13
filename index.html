@@ -70,6 +70,9 @@
             <button onclick="salvarOS()">Salvar Online</button>
             <button onclick="listarOS()">Ver Histórico</button>
             <button onclick="gerarImagem()">Gerar Imagem</button>
+            <button onclick="gerarPDF()" class="btn-pdf">
+                Gerar PDF
+            </button>
         </div>
 
     </div>
@@ -83,6 +86,8 @@
             navigator.serviceWorker.register("service-worker.js")
         }
     </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 
 
