@@ -101,20 +101,42 @@ window.listarOS = async function () {
 
     const querySnapshot = await getDocs(collection(db, "ordens"));
 
-    let html = "<h3>Histórico</h3>";
+    let html = "<h3>Histórico de Ordens de Serviço</h3>";
 
     querySnapshot.forEach(doc => {
 
         const os = doc.data();
 
-        html += `
-<div style="border-bottom:1px solid #ccc; margin-bottom:10px;">
-<p><strong>OS:</strong> ${os.numeroOS}</p>
-<p><strong>Cliente:</strong> ${os.nome}</p>
-<p><strong>Total:</strong> R$ ${os.total}</p>
-</div>
-`;
+        let servicosHTML = "";
 
+        os.servicos.forEach(servico => {
+            servicosHTML += `
+            <li>${servico.descricao} - R$ ${servico.valor}</li>
+            `;
+        });
+
+        html += `
+        <div style="border:1px solid #ccc; padding:15px; margin-bottom:15px; border-radius:10px;">
+        
+            <p><strong>OS Nº:</strong> ${os.numeroOS}</p>
+            <p><strong>Data:</strong> ${os.data}</p>
+
+            <p><strong>Cliente:</strong> ${os.nome}</p>
+            <p><strong>Telefone:</strong> ${os.telefone}</p>
+            <p><strong>Endereço:</strong> ${os.endereco}</p>
+
+            <p><strong>Placa da Moto:</strong> ${os.placa}</p>
+            <p><strong>KM:</strong> ${os.km}</p>
+
+            <p><strong>Serviços:</strong></p>
+            <ul>
+                ${servicosHTML}
+            </ul>
+
+            <p><strong>Total:</strong> R$ ${os.total}</p>
+
+        </div>
+        `;
     });
 
     document.getElementById("historico").innerHTML = html;
