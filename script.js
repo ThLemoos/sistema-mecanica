@@ -269,38 +269,94 @@ window.filtrarOS = function () {
 
 window.gerarPDF = function () {
 
-    const botoesRemover = document.querySelectorAll(".btn-remove");
-    botoesRemover.forEach(btn => btn.style.display = "none");
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-    const btnAdd = document.getElementById("btnAdd");
-    btnAdd.style.display = "none";
+    const numeroOS = document.getElementById("numeroOS").innerText;
+    const data = document.getElementById("dataAtual").innerText;
 
-    const acoes = document.querySelector(".acoes");
-    acoes.style.display = "none";
+    const nome = document.getElementById("nome").value;
+    const telefone = document.getElementById("telefone").value;
+    const endereco = document.getElementById("endereco").value;
+    const placa = document.getElementById("placa").value;
+    const km = document.getElementById("km").value;
 
-    html2canvas(document.querySelector(".container"), {
-        scale: 2
-    }).then(canvas => {
+    const total = document.getElementById("valorTotal").innerText;
 
-        const imgData = canvas.toDataURL("image/png");
+    let y = 20;
 
-        const { jsPDF } = window.jspdf;
+    doc.setFontSize(18);
+    doc.text("ORDEM DE SERVIÇO", 105, y, { align: "center" });
 
-        const pdf = new jsPDF("p", "mm", "a4");
+    y += 10;
 
-        const larguraPDF = 210;
-        const alturaPDF = (canvas.height * larguraPDF) / canvas.width;
+    doc.text("Oficina Sempre 80km/h", 105, y, { align: "center" })
 
-        pdf.addImage(imgData, "PNG", 0, 10, larguraPDF, alturaPDF);
+    y += 10;
 
-        pdf.save("ordem-servico.pdf");
+    doc.setFontSize(11);
+    doc.text("OS Nº: " + numeroOS, 20, y);
+    doc.text("Data: " + data, 150, y);
 
-        botoesRemover.forEach(btn => btn.style.display = "inline-block");
+    y += 15;
 
-        btnAdd.style.display = "inline-block";
+    doc.setFontSize(14);
+    doc.text("DADOS DO CLIENTE", 20, y);
 
-        acoes.style.display = "block";
+    y += 8;
+
+    doc.setFontSize(11);
+    doc.text("Nome: " + nome, 20, y);
+    y += 7;
+
+    doc.text("Telefone: " + telefone, 20, y);
+    y += 7;
+
+    doc.text("Endereço: " + endereco, 20, y);
+    y += 7;
+
+    doc.text("Placa: " + placa, 20, y);
+    y += 7;
+
+    doc.text("KM: " + km, 20, y);
+
+    y += 15;
+
+    doc.setFontSize(14);
+    doc.text("SERVIÇOS", 20, y);
+
+    y += 8;
+
+    doc.setFontSize(11);
+
+    document.querySelectorAll("#servicos div").forEach(div => {
+
+        const inputs = div.querySelectorAll("input");
+
+        const descricao = inputs[0].value;
+        const valor = Number(inputs[1].value).toFixed(2);
+
+        doc.text(`${descricao} - R$ ${valor}`, 20, y);
+
+        y += 7;
 
     });
+
+    y += 10;
+
+    doc.line(20, y, 190, y);
+
+    y += 10;
+
+    doc.setFontSize(14);
+    doc.text("TOTAL: R$ " + total, 20, y);
+
+    y += 20;
+
+    doc.setFontSize(11);
+    doc.text("__________________________________", 20, y);
+    doc.text("Assinatura do Cliente", 20, y + 6);
+
+    doc.save("ordem-servico-" + numeroOS + ".pdf");
 
 };

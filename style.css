@@ -1,14 +1,24 @@
 html,
 body {
-    height: 100%;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 
 body {
     font-family: Arial;
     background: #f0f0f0;
     padding: 20px;
-    overscroll-behavior: none;
+    overscroll-behavior: contain;
+}
+
+.acoes {
+    position: sticky;
+    bottom: 0;
+    background: #111;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .container {
