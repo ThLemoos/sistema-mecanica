@@ -72,8 +72,6 @@
             <button onclick="gerarImagem()">Gerar Imagem</button>
         </div>
 
-        <div id="historico"></div>
-
     </div>
 
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
@@ -85,6 +83,22 @@
             navigator.serviceWorker.register("service-worker.js")
         }
     </script>
+
+    <div id="painelHistorico" class="painel-historico">
+
+        <div class="topo-historico">
+
+            <h3>Histórico de Ordens</h3>
+
+            <button onclick="fecharHistorico()" class="btn-fechar">
+                Fechar
+            </button>
+
+        </div>
+
+        <div id="historicoConteudo"></div>
+
+    </div>
 
 </body>
 

@@ -101,45 +101,21 @@ window.salvarOS = async function () {
 
     limparFormulario();
 
-}
+};
 
 window.listarOS = async function () {
 
     const querySnapshot = await getDocs(collection(db, "ordens"));
 
-    let html = `
-<div style="display:flex; justify-content:space-between; align-items:center;">
-<h3>Histórico de Ordens de Serviço</h3>
-
-<button onclick="fecharHistorico()" style="
-background:#333;
-color:white;
-border:none;
-padding:8px 12px;
-border-radius:6px;
-cursor:pointer;
-">
-Fechar
-</button>
-
-</div>
-`;
+    let html = "";
 
     querySnapshot.forEach(documento => {
 
         const os = documento.data();
         const id = documento.id;
 
-        let servicosHTML = "";
-
-        os.servicos.forEach(servico => {
-            servicosHTML += `
-            <li>${servico.descricao} - R$ ${servico.valor}</li>
-            `;
-        });
-
         html += `
-<div style="border:1px solid #ccc; padding:15px; margin-bottom:15px; border-radius:10px;">
+<div class="card-os">
 
 <p><strong>OS Nº:</strong> ${os.numeroOS}</p>
 <p><strong>Data:</strong> ${os.data}</p>
@@ -152,14 +128,7 @@ Fechar
 
 <p><strong>Total:</strong> R$ ${os.total}</p>
 
-<button onclick="excluirOS('${id}')" style="
-background:#ff4444;
-color:white;
-border:none;
-padding:8px 12px;
-border-radius:6px;
-cursor:pointer;
-">
+<button onclick="excluirOS('${id}')" class="btn-excluir">
 Excluir OS
 </button>
 
@@ -167,7 +136,9 @@ Excluir OS
 `;
     });
 
-    document.getElementById("historico").innerHTML = html;
+    document.getElementById("historicoConteudo").innerHTML = html;
+
+    document.getElementById("painelHistorico").classList.add("ativo");
 
 };
 
@@ -183,7 +154,7 @@ window.excluirOS = async function (id) {
 
     listarOS();
 
-}
+};
 
 window.gerarImagem = function () {
 
@@ -218,13 +189,6 @@ window.gerarImagem = function () {
 
 };
 
-if ("serviceWorker" in navigator) {
-
-    navigator.serviceWorker.register("service-worker.js")
-        .then(() => console.log("Service Worker registrado"));
-
-}
-
 function limparFormulario() {
 
     nome.value = "";
@@ -245,6 +209,13 @@ function limparFormulario() {
 
 window.fecharHistorico = function () {
 
-    document.getElementById("historico").innerHTML = "";
+    document.getElementById("painelHistorico").classList.remove("ativo");
+
+};
+
+if ("serviceWorker" in navigator) {
+
+    navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("Service Worker registrado"));
 
 }
