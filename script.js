@@ -7,7 +7,8 @@ import {
     deleteDoc,
     doc,
     query,
-    orderBy
+    orderBy,
+    updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 const firebaseConfig = {
     apiKey: "AIzaSyC17R6vlTFRdU4lRTGL0knCefnYsnihjbE",
@@ -20,6 +21,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+let idEditando = null;
 
 document.addEventListener("DOMContentLoaded", () => {
     gerarNumeroOS();
@@ -80,26 +82,39 @@ window.salvarOS = async function () {
 
     });
 
-    await addDoc(collection(db, "ordens"), {
-
-        numeroOS: document.getElementById("numeroOS").innerText,
-        data: document.getElementById("dataAtual").innerText,
+    const dados = {
+        numeroOS: numeroOS.innerText,
+        data: dataAtual.innerText,
 
         nome: nome.value,
         telefone: telefone.value,
         endereco: endereco.value,
         placa: placa.value,
         km: km.value,
+        marca: marca.value,
 
         servicos,
         total: valorTotal.innerText
+    };
 
-    });
+    // 🔥 SE ESTIVER EDITANDO
+    if (idEditando) {
 
-    alert("OS salva com sucesso!");
+        await updateDoc(doc(db, "ordens", idEditando), dados);
+
+        alert("OS atualizada com sucesso!");
+
+        idEditando = null;
+
+    } else {
+
+        await addDoc(collection(db, "ordens"), dados);
+
+        alert("OS salva com sucesso!");
+
+    }
 
     listarOS();
-
     limparFormulario();
 
 };
@@ -145,6 +160,7 @@ window.listarOS = async function () {
 
 <p><strong>Placa:</strong> ${os.placa}</p>
 <p><strong>KM:</strong> ${os.km}</p>
+<p><strong>Marca:</strong> ${os.marca || ""}</p>
 
 <p><strong>Serviços realizados:</strong></p>
 
@@ -153,6 +169,10 @@ ${listaServicos}
 </ul>
 
 <p><strong>Total:</strong> R$ ${os.total}</p>
+
+<button onclick="editarOS('${id}')" class="btn-editar">
+Editar
+</button>
 
 <button onclick="excluirOS('${id}')" class="btn-excluir">
 Excluir OS
@@ -227,6 +247,7 @@ function limparFormulario() {
     endereco.value = "";
     placa.value = "";
     km.value = "";
+    marca.value = "";
 
     document.getElementById("servicos").innerHTML = "";
 
@@ -358,5 +379,53 @@ window.gerarPDF = function () {
     doc.text("Assinatura do Cliente", 20, y + 6);
 
     doc.save("ordem-servico-" + numeroOS + ".pdf");
+
+};
+
+window.editarOS = async function (id) {
+
+    const q = await getDocs(collection(db, "ordens"));
+
+    q.forEach(docSnap => {
+
+        if (docSnap.id === id) {
+
+            const os = docSnap.data();
+
+            idEditando = id;
+
+            document.getElementById("numeroOS").innerText = os.numeroOS;
+            document.getElementById("dataAtual").innerText = os.data;
+
+            nome.value = os.nome;
+            telefone.value = os.telefone;
+            endereco.value = os.endereco;
+            placa.value = os.placa;
+            km.value = os.km;
+            marca.value = os.marca || "";
+
+            document.getElementById("servicos").innerHTML = "";
+
+            os.servicos.forEach(servico => {
+
+                const div = document.createElement("div");
+
+                div.innerHTML = `
+                <input type="text" value="${servico.descricao}">
+                <input type="number" value="${servico.valor}" oninput="calcularTotal()">
+                <button onclick="this.parentElement.remove(); calcularTotal();" class="btn-remove">X</button>
+                `;
+
+                document.getElementById("servicos").appendChild(div);
+
+            });
+
+            calcularTotal();
+
+            fecharHistorico();
+
+        }
+
+    });
 
 };
