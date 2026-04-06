@@ -93,11 +93,12 @@ window.salvarOS = async function () {
         km: km.value,
         marca: marca.value,
 
+        observacoes: document.getElementById("observacoes").value,
+
         servicos,
         total: valorTotal.innerText
     };
 
-    // 🔥 SE ESTIVER EDITANDO
     if (idEditando) {
 
         await updateDoc(doc(db, "ordens", idEditando), dados);
@@ -132,7 +133,6 @@ window.listarOS = async function () {
         const os = documento.data();
         const id = documento.id;
 
-        // montar lista de serviços
         let listaServicos = "";
 
         if (os.servicos && os.servicos.length > 0) {
@@ -253,6 +253,8 @@ function limparFormulario() {
 
     document.getElementById("valorTotal").innerText = "0.00";
 
+    document.getElementById("observacoes").value = "";
+
     gerarNumeroOS();
 
     adicionarServico();
@@ -301,6 +303,9 @@ window.gerarPDF = function () {
     const endereco = document.getElementById("endereco").value;
     const placa = document.getElementById("placa").value;
     const km = document.getElementById("km").value;
+    const marca = document.getElementById("marca").value;
+
+    const observacoes = document.getElementById("observacoes").value;
 
     const total = document.getElementById("valorTotal").innerText;
 
@@ -311,7 +316,7 @@ window.gerarPDF = function () {
 
     y += 10;
 
-    doc.text("Oficina Sempre 80km/h", 105, y, { align: "center" })
+    doc.text("Oficina Sempre 80km/h", 105, y, { align: "center" });
 
     y += 10;
 
@@ -340,6 +345,10 @@ window.gerarPDF = function () {
     y += 7;
 
     doc.text("KM: " + km, 20, y);
+
+    y += 7;
+
+    doc.text("Marca da Moto: " + marca, 20, y);
 
     y += 15;
 
@@ -378,8 +387,28 @@ window.gerarPDF = function () {
     doc.text("__________________________________", 20, y);
     doc.text("Assinatura do Cliente", 20, y + 6);
 
-    doc.save("ordem-servico-" + numeroOS + ".pdf");
+    y += 20;
 
+    if (y > 250) {
+        doc.addPage();
+        y = 20;
+    }
+
+    doc.setFontSize(12);
+    doc.text("Observações Técnicas:", 20, y);
+
+    y += 6;
+
+    doc.setFontSize(10);
+
+    const linhas = doc.splitTextToSize(
+        observacoes || "Nenhuma observação informada.",
+        170
+    );
+
+    doc.text(linhas, 20, y);
+
+    doc.save("ordem-servico-" + numeroOS + ".pdf");
 };
 
 window.editarOS = async function (id) {
@@ -396,6 +425,7 @@ window.editarOS = async function (id) {
 
             document.getElementById("numeroOS").innerText = os.numeroOS;
             document.getElementById("dataAtual").innerText = os.data;
+            document.getElementById("observacoes").value = os.observacoes || "";
 
             nome.value = os.nome;
             telefone.value = os.telefone;

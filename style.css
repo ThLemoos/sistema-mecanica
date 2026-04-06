@@ -329,3 +329,18 @@ button:hover {
 .lista-servicos li {
     margin-bottom: 4px;
 }
+
+.observacoes-container {
+    margin-top: 20px;
+    padding-right: 15px;
+}
+
+.observacoes-container textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    font-size: 14px;
+}
