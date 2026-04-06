@@ -170,6 +170,10 @@ ${listaServicos}
 
 <p><strong>Total:</strong> R$ ${os.total}</p>
 
+<p><strong>Observações:</strong><br>
+${os.observacoes ? os.observacoes : "Nenhuma observação informada."}
+</p>
+
 <button onclick="editarOS('${id}')" class="btn-editar">
 Editar
 </button>
